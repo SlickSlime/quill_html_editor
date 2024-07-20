@@ -27,6 +27,11 @@ class ToolBar extends StatefulWidget {
   ///[customButtons] to add custom buttons in the toolbar
   final List<Widget>? customButtons;
 
+  /// [onImagePicked] to customize the image picker
+  /// Returns the base64 string of the image
+  /// If image is not picked, it should return null
+  final Future<String?> Function()? onImagePicked;
+
   ///[iconSize] to define the toolbar icon size
   final double? iconSize;
 
@@ -270,6 +275,7 @@ class ToolBar extends StatefulWidget {
     this.activeIconColor = Colors.blue,
     this.toolBarColor = Colors.white,
     this.mainAxisSize,
+    this.onImagePicked,
   })  : assert(crossAxisAlignment is WrapCrossAlignment,
             "Please pass WrapCrossAlignment, instead of CrossAxisAlignment"),
         mainAxisAlignment = MainAxisAlignment.start,
@@ -300,6 +306,7 @@ class ToolBar extends StatefulWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.min,
     this.textBaseline = TextBaseline.alphabetic,
+    this.onImagePicked,
   })  : assert(crossAxisAlignment is CrossAxisAlignment,
             "Please pass CrossAxisAlignment, instead of WrapCrossAlignment"),
         spacing = 0.0,
@@ -696,6 +703,14 @@ class ToolBarState extends State<ToolBar> {
                 } else if (toolbarItem.style == ToolBarStyle.redo) {
                   widget.controller.redo();
                 } else if (toolbarItem.style == ToolBarStyle.image) {
+                  if (widget.onImagePicked != null) {
+                    String? image = await widget.onImagePicked!();
+                    if (image != null) {
+                      _formatMap['image'] = image;
+                      widget.controller.embedImage(image);
+                    }
+                    return;
+                  }
                   await ImageSelector(onImagePicked: (value) {
                     _formatMap['image'] = value;
                     widget.controller.embedImage(value);

@@ -77,3 +77,6 @@ build/
 /android/
 /example/ios/
 /example/web/
+
+# VSCode
+.vscode/
