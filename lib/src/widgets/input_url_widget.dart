@@ -127,6 +127,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                               color: HexColor.fromHex('#E7F0FE'),
                               borderRadius: BorderRadius.circular(10)),
                           child: TextFormField(
+                            autofocus: true,
                             minLines: 1,
                             onChanged: (v) {
                               setState(() => _inputValue = v);
@@ -145,6 +146,7 @@ class _InputUrlWidgetState extends State<InputUrlWidget> {
                                 alignLabelWithHint: true,
                                 hintStyle: TextStyle(fontSize: 10),
                                 border: InputBorder.none),
+                            keyboardType: TextInputType.url,
                           ),
                         ),
                       ),
