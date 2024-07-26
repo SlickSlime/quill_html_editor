@@ -620,8 +620,23 @@ class ToolBarState extends State<ToolBar> {
                 isActive: _formatMap['link'] != null,
                 controller: widget.controller,
                 type: UrlInputType.hyperlink,
-                onSubmit: (v) {
-                  widget.controller.setFormat(format: 'link', value: v);
+                onSubmit: (v) async {
+                  final selectedText =
+                      await widget.controller.getSelectedText();
+                  if (selectedText is String && selectedText.isNotEmpty) {
+                    // Add link to selected text
+                    widget.controller.setFormat(format: 'link', value: v);
+                  } else {
+                    // Add link on url as text
+                    final range = await widget.controller.getSelectionRange();
+                    if (range.index != null) {
+                      await widget.controller
+                          .insertText(v, index: range.index!);
+                      await widget.controller
+                          .setSelectionRange(range.index!, v.length);
+                      widget.controller.setFormat(format: 'link', value: v);
+                    }
+                  }
                 },
               ),
             )));
