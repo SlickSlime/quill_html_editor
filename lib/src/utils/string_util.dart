@@ -23,7 +23,8 @@ class StringUtil {
   ///[sanitizeVideoUrl] a utility method to convert the Youtube, Vimeo or Network urls to embed in editor
   static String? sanitizeVideoUrl(String url) {
     final uri = Uri.parse(url);
-    if (uri.host.toLowerCase().contains('youtube')) {
+    if (uri.host.toLowerCase().contains('youtube') ||
+        uri.host.toLowerCase().contains('youtu.be')) {
       return getYoutubeEmbedLink(url);
     } else if (uri.host.toLowerCase().contains('vimeo')) {
       return getVimeoEmbedLink(url);
