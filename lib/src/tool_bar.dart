@@ -30,7 +30,7 @@ class ToolBar extends StatefulWidget {
   /// [onImagePicked] to customize the image picker
   /// Returns the base64 string of the image
   /// If image is not picked, it should return null
-  final Future<String?> Function()? onImagePicked;
+  final Future<List<String?>> Function()? onImagePicked;
 
   ///[iconSize] to define the toolbar icon size
   final double? iconSize;
@@ -719,10 +719,12 @@ class ToolBarState extends State<ToolBar> {
                   widget.controller.redo();
                 } else if (toolbarItem.style == ToolBarStyle.image) {
                   if (widget.onImagePicked != null) {
-                    String? image = await widget.onImagePicked!();
-                    if (image != null) {
-                      _formatMap['image'] = image;
-                      widget.controller.embedImage(image);
+                    List<String?> images = await widget.onImagePicked!();
+                    for (var image in images) {
+                      if (image != null) {
+                        _formatMap['image'] = image;
+                        widget.controller.embedImage(image);
+                      }
                     }
                     return;
                   }
