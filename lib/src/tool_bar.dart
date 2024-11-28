@@ -726,6 +726,14 @@ class ToolBarState extends State<ToolBar> {
                         widget.controller.embedImage(image);
                       }
                     }
+
+                    // Add empty space after image
+                    int? index =
+                        (await widget.controller.getSelectionRange()).index;
+                    if (index != null) {
+                      index += images.length;
+                      widget.controller.setSelectionRange(index, 0);
+                    }
                     return;
                   }
                   await ImageSelector(onImagePicked: (value) {
