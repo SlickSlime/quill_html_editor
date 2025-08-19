@@ -307,14 +307,7 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
                   }
                   try {
                     if (widget.controller._changeController != null) {
-                      String finalText = "";
-                      String parsedText =
-                          QuillEditorController._stripHtmlIfNeeded(map);
-                      if (parsedText.trim() == "") {
-                        finalText = "";
-                      } else {
-                        finalText = map;
-                      }
+                      String finalText = map;
                       if (widget.onTextChanged != null) {
                         widget.onTextChanged!(finalText);
                       }
@@ -355,14 +348,7 @@ class QuillHtmlEditorState extends State<QuillHtmlEditor> {
                   }
                   try {
                     if (widget.controller._changeController != null) {
-                      String finalText = "";
-                      String parsedText =
-                          QuillEditorController._stripHtmlIfNeeded(map);
-                      if (parsedText.trim() == "") {
-                        finalText = "";
-                      } else {
-                        finalText = map;
-                      }
+                      String finalText = map;
                       if (widget.onEditingComplete != null) {
                         widget.onEditingComplete!(finalText);
                       }
@@ -1550,11 +1536,6 @@ class QuillEditorController {
   void dispose() {
     _changeController?.close();
     _editorLoadedController?.close();
-  }
-
-  /// it is a regex method to remove the tags and replace them with empty space
-  static String _stripHtmlIfNeeded(String text) {
-    return text.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), ' ');
   }
 
   ///  [undo] method to undo the changes in editor
