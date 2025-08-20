@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quill_html_editor/quill_html_editor.dart';
 import 'package:quill_html_editor/src/constants/image_constants.dart';
 import 'package:quill_html_editor/src/utils/hex_color.dart';
@@ -711,6 +712,7 @@ class ToolBarState extends State<ToolBar> {
               style: toolbarItem.style,
               isActive: toolbarItem.isActive,
               onTap: () async {
+                HapticFeedback.selectionClick();
                 if (toolbarItem.style == ToolBarStyle.clearHistory) {
                   widget.controller.clearHistory();
                 } else if (toolbarItem.style == ToolBarStyle.undo) {
